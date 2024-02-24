@@ -6,7 +6,7 @@ import getRandomFoodItem from '@/lib/actions/get-food-item';
 
 import ViewFoodItemPage from '@/components/food-items/view';
 
-export default async function Home() {  
+export default async function Home() {
   let foodItem = await getRandomFoodItem();
 
   return (

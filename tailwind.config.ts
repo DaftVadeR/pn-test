@@ -8,6 +8,7 @@ const config: Config = {
   theme: {
     colors: {
       primaryGreen: '#53b97c',
+      white: '#fff',
       altGray: '#f2f2f2',
     },
     extend: {

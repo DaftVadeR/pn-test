@@ -1,6 +1,6 @@
 import { classed } from "@tw-classed/react";
 
-export const Container = classed.div("bg-white flex flex-col items-center h-full w-full");
+export const Container = classed.div("flex flex-col items-center h-full w-full");
 
 export const Content = classed.div("w-full h-full flex-1 relative");
 

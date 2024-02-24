@@ -12,7 +12,7 @@ export default async function getRandomFoodItem (): Promise<any> {
     return null;
   }
 
-  let foodItem: {} | null = null;
+  let foodItem = null;
 
   try {
     const prisma = new PrismaClient();
@@ -34,7 +34,7 @@ export default async function getRandomFoodItem (): Promise<any> {
       viewedIds.push(viewedFoodItem.foodItemId);
     });
 
-    foodItem = await prisma.foodItem.findFirst({
+    let foodItemQuery = {
       select: {
         id: true,
         nutritional_facts: true,
@@ -46,13 +46,32 @@ export default async function getRandomFoodItem (): Promise<any> {
             userId: session?.user?.id,
           }
         },
-      },
+      }
+    };
+
+    foodItem = await prisma.foodItem.findFirst({
+      ...foodItemQuery,
       where: {
         id: {
           notIn: viewedIds
         },
       },
     });
+
+    // Add view
+    if(foodItem && viewedIds.indexOf(foodItem.id) === -1) {
+      await prisma.viewedFoodItem.create({
+        data: {
+          userId: session?.user?.id,
+          foodItemId: foodItem.id,
+        }
+      });
+    } else {
+      // All items viewed, don't return nothing.
+      foodItem = await prisma.foodItem.findFirst({
+        ...foodItemQuery,
+      });
+    }
 
     return foodItem;
   } catch (e) {

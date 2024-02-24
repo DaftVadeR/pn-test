@@ -10,16 +10,18 @@ type TabProps = {
 };
 
 export default function TabsList({ active, onChangeTab, items }: TabProps) {
-  console.log('active', active, 'items', items);
   return (
     <Tabs role="tablist">
-      {items.map((item, i) => (
-        <Button key={i} role="tab" onClick={() => onChangeTab(item)} className={active === item ? 'tab-active' : ''}>
-          <NarrowUnderline>
-            {item}
-          </NarrowUnderline>
-        </Button>
-      ))}
+      {items.map((item, i) => {
+        let isActive = active === item;
+        return (
+          <Button key={i} role="tab" onClick={() => onChangeTab(item)} className={isActive ? 'tab-active' : ''}>
+            <NarrowUnderline>
+              {item}
+            </NarrowUnderline>
+          </Button>
+        );
+      })}
     </Tabs>
   );
 }

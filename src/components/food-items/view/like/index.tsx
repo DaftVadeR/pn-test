@@ -1,15 +1,28 @@
 
 'use client';
 
+import { useCallback, useContext } from 'react';
 import { LikeIcon } from './like-icon';
 import {Button} from './style';
-import addLike from '@/lib/actions/add-like';
+import { FoodItemContext } from '@/src/lib/contexts/food-item';
 
-type LikeProps = {foodItemId: string};
+export default function Like() {
+  const {isLiked, toggleLike, foodItem } = useContext(FoodItemContext);
 
-export default function Like({ foodItemId }: LikeProps) {
+  const onClick = useCallback(() => {
+      console.log('clicked');
+      toggleLike(!isLiked);
+  }, [toggleLike, isLiked]);
+
+  if(!foodItem) return null;
+
+  // Would be better with optimistic rendering.
   return (
-    <Button onClick={() => addLike(foodItemId)}>
+    <Button 
+      type="button"
+      onClick={onClick} 
+      className={isLiked ? 'active' : ''}
+    >
       <LikeIcon />
     </Button>
   );

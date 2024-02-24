@@ -11,8 +11,6 @@ const NUTRITION = "Nutrition Facts";
 const ContentStuff = ({ foodItem }: { foodItem: FoodItem }) => {
   const [currentTab, setTab] = useState<string>(DESCRIPTION);
 
-  console.log(foodItem);
-
   return (
     <>
       <Tabs
