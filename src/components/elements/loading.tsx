@@ -1,0 +1,1 @@
+export const LoadingIndicator = () => <span className="loading loading-spinner loading-lg"></span>;
