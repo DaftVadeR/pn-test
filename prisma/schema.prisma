@@ -86,5 +86,14 @@ model FoodItem {
   nutrititional_facts String
   views ViewedFoodItem[]
   likes LikedFoodItem[]
+  images FoodItemImage[]
   @@map(name: "food_items")
+}
+
+model FoodItemImage {
+  id    String  @id @default(cuid())
+  url String
+  foodItemId String
+  foodItem      FoodItem @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+  @@map(name: "food_item_images")
 }

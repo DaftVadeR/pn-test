@@ -67,6 +67,14 @@ CREATE TABLE "food_items" (
     "nutrititional_facts" TEXT NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "food_item_images" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "url" TEXT NOT NULL,
+    "foodItemId" TEXT NOT NULL,
+    CONSTRAINT "food_item_images_foodItemId_fkey" FOREIGN KEY ("foodItemId") REFERENCES "food_items" ("id") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "accounts_provider_providerAccountId_key" ON "accounts"("provider", "providerAccountId");
 
