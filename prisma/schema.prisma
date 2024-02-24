@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Probably not needed for test
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+// Probably not needed for test
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("sessions")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  password      String?   @map("password_hash")
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  views      ViewedFoodItem[]
+  likes      LikedFoodItem[]
+  @@map(name: "users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map(name: "verification_tokens")
+}
+
+model ViewedFoodItem {
+  id    String  @id @default(cuid())
+  userId       String
+  foodItemId   String
+  foodItem      FoodItem @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map(name: "viewed_food_items")
+}
+
+model LikedFoodItem {
+  id    String  @id @default(cuid())
+  userId       String
+  foodItemId   String
+  foodItem      FoodItem @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
+  user      User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map(name: "liked_food_items")
+}
+
+model FoodItem {
+  id    String  @id @default(cuid())
+  name  String
+  description String
+  nutrititional_facts String
+  views ViewedFoodItem[]
+  likes LikedFoodItem[]
+  @@map(name: "food_items")
+}
