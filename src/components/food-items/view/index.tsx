@@ -1,24 +1,29 @@
-import { Container, Left, ContentContainer, Right, Split, Title, ImageContainer, Content, DividerSpace, Divider} from "./style";
-import {FoodItem} from '../types';
+
+import { Icons, Container, TitleBar,  ContentContainer, Title, ImageContainer } from "./style";
+
+import { FoodItem } from '../types';
+import Like from './like';
+import ContentStuff from './content';
 
 const ViewFoodItemPage = ({ foodItem }: { foodItem: FoodItem }) => {
   return (
     <Container>
-      <Split>
-        <Left>
-          <ImageContainer>         
-            <img src={foodItem.images[0].url} alt={foodItem.name} />
-          </ImageContainer>
-        </Left>
-        <Right>
+      <ImageContainer>         
+        <img src={foodItem.images[0].url} alt={foodItem.name} />
+      </ImageContainer>
+      <ContentContainer>
+        <TitleBar>
           <Title>
             {foodItem.name}
           </Title>
-          <ContentContainer>
-            <Content dangerouslySetInnerHTML={{__html: foodItem.description}} />            
-          </ContentContainer>
-        </Right>
-      </Split>
+          <Icons>
+            <Like foodItemId={foodItem.id} />
+          </Icons>
+        </TitleBar>
+        <ContentStuff
+          foodItem={foodItem}        
+        />
+      </ContentContainer>
     </Container>
   );
 };

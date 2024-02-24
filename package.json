@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "migrate:dev": "npx prisma migrate dev --skip-seed",
-    "seed:dev": "dotenv -e .env -- npx prisma db seed"
+    "seed:dev": "dotenv -e .env -- npx prisma db seed",
+    "remake-db:dev": "rm -r ./prisma/migrations && npm run migrate:dev && npm run seed:dev"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.4.0",
@@ -22,6 +23,8 @@
     "next-auth": "^5.0.0-beta.12",
     "react": "^18",
     "react-dom": "^18",
+    "react-twc": "^1.4.1",
+    "sass": "^1.71.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

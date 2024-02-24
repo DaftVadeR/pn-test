@@ -64,7 +64,7 @@ CREATE TABLE "food_items" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "nutrititional_facts" TEXT NOT NULL
+    "nutritional_facts" TEXT NOT NULL
 );
 
 -- CreateTable

@@ -1,23 +1,30 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  mode: 'jit', 
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    colors: {
+      primaryGreen: '#53b97c',
+      altGray: '#f2f2f2',
+    },
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
+      // backgroundImage: {
+      //   "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      //   "gradient-conic":
+      //     "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      // },
     },
   },
   darkMode: "class",
   
   plugins: [require('@tailwindcss/typography'), require("daisyui")],
+  safelist: [
+    {
+      pattern: /./ 
+    },
+  ],
 };
 export default config;

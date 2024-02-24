@@ -2,7 +2,7 @@ import React from "react";
 
 import MainTemplate from "../components/layout/main";
 
-import getRandomFoodItem from '@/src/lib/actions/get-food-item';
+import getRandomFoodItem from '@/lib/actions/get-food-item';
 
 import ViewFoodItemPage from '@/components/food-items/view';
 

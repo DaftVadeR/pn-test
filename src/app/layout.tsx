@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import Layout from '../components/layout';
 import "../components/layout/globals.css";
+import '../components/layout/layout.scss';
 
 export const metadata: Metadata = {
   title: "CiaoChow",

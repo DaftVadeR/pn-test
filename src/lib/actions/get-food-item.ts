@@ -37,6 +37,7 @@ export default async function getRandomFoodItem (): Promise<any> {
     foodItem = await prisma.foodItem.findFirst({
       select: {
         id: true,
+        nutritional_facts: true,
         description: true,
         name: true,
         images: true,

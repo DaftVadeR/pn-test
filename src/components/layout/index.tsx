@@ -1,5 +1,5 @@
-import MenuSettingsContextProvider from "../../lib/contexts/menu";
 import { Inter } from "next/font/google";
+import { Body, Html } from './style';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,10 +9,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`dark ${inter.className} min-h-dvh h-lvh w-lvw overflow-hidden`}>
-      <body className="h-lvh w-lvw overflow-y-auto">
+    <Html lang="en" className={`${inter.className}`}>
+      <Body className="">
         {children}
-      </body>
-    </html>
+      </Body>
+    </Html>
   );
 }

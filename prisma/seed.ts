@@ -17,19 +17,45 @@ const userData: Prisma.UserCreateInput[] = [
   }
 ];
 
-const getRandomImageUrl = () => `https://placehold.co/500x500/EEE/${genRanHex(6)}`;
+const getRandomImageUrl = () => `https://placehold.co/500x500/333/${genRanHex(6)}`;
 
 const foodItems: Prisma.FoodItemCreateInput[] = [
 ];
 
+const toUppercase = (paragraph: string) => {
+  return `${paragraph.charAt(0).toUpperCase()}${paragraph.slice(1)}`;
+}
+
 for (let i = 0; i < 20; i++) {
-  let numWords = Math.floor(Math.random() * 2) + 1;
-  console.log('numwords', numWords);
+  // let numWords = Math.floor(Math.random() * 2) + 1;
+  let numWords = 2;
+
+  let name: string = fastLoremIpsum(`${numWords}w`);
+  let descriptionUppercase: string = toUppercase(fastLoremIpsum(`75w`))+"\n\n\n\n"+toUppercase(fastLoremIpsum(`75w`));
+  let nutritional_facts: string = fastLoremIpsum(`105w`);
+
+  // console.log('name', name);
+  // console.log('description', description);
+  // console.log('nutritional_facts', nutritional_facts);
+
+  // Capitalize first letter
+  // let capitalized = 
+
+  let nameUppercase: string = `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
+  // let descriptionUppercase: string = `${description.charAt(0).toUpperCase()}${description.slice(1)}`;
+  let nfUppercase: string = `${nutritional_facts.charAt(0).toUpperCase()}${nutritional_facts.slice(1)}`;
+
+  // console.log('name', name);
+  // console.log('name uppercase', nameUppercase);
+  // console.log('description', description);
+  // console.log('description uppercase', descriptionUppercase);
+  // console.log('nutritional_facts', nutritional_facts);
+  // console.log('nutritional_facts uppercase', nfUppercase);
 
   foodItems.push({
-    name: fastLoremIpsum(`${numWords}w`),
-    description: fastLoremIpsum(`80w`),
-    nutrititional_facts: fastLoremIpsum(`80w`),
+    name: nameUppercase,
+    description: descriptionUppercase,
+    nutritional_facts: nfUppercase,
     images: {
       create: [
         {

@@ -1,0 +1,28 @@
+
+.narrow-underline {
+  margin-bottom: -2px;
+  border-bottom: 4px solid transparent;
+  position: relative;
+  display: block;
+}
+.tab-active .narrow-underline {
+  border-color: #53b97c;
+}
+
+.hover-svg {
+  #hover-change {
+    transition: all 0.1s ease-in;
+  }
+
+  &:hover {
+    #hover-change {
+      fill: #53b97c;
+    }  
+  }
+}
+
+.truncate-ellipses {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

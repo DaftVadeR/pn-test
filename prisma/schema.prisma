@@ -83,7 +83,7 @@ model FoodItem {
   id    String  @id @default(cuid())
   name  String
   description String
-  nutrititional_facts String
+  nutritional_facts String
   views ViewedFoodItem[]
   likes LikedFoodItem[]
   images FoodItemImage[]
