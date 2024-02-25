@@ -1,4 +1,6 @@
+
 const path = require('path');
+
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -8,11 +10,13 @@ const nextConfig = {
     return config;
   },
   images: {
-    remotePatterns: [{
-      protocol: 'https',
-        hostname: 'placehold.co', // For test images
-        port: '',
-    }]
+    dangerouslyAllowSVG: true,
+    domains: ['placehold.co'],
+    // remotePatterns: [{
+    //   protocol: 'https',
+    //     hostname: 'placehold.co', // For test images
+    //     port: '',
+    // }]
   },
   transpilePackages: ['@tw-classed/react'],
 };

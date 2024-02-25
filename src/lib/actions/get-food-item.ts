@@ -1,7 +1,7 @@
 'use server';
 
 import { auth } from "@/auth";
-import { PrismaClient } from "@prisma/client";
+import { FoodItem, PrismaClient } from "@prisma/client";
 
 // Will fix types if have time.
 export default async function getRandomFoodItem (): Promise<any> {
@@ -59,15 +59,20 @@ export default async function getRandomFoodItem (): Promise<any> {
     });
 
     // Add view
-    if(foodItem && viewedIds.indexOf(foodItem.id) === -1) {
-      await prisma.viewedFoodItem.create({
-        data: {
-          userId: session?.user?.id,
-          foodItemId: foodItem.id,
-        }
-      });
+    if(foodItem && session?.user?.id && viewedIds.indexOf(foodItem.id) === -1) {
+      try{ 
+        await prisma.viewedFoodItem.create({
+          data: {          
+            userId: session.user.id,
+            foodItemId: foodItem.id,
+          }
+        });
+      } catch(e) {
+        console.error('session user ID probably out of sync due to user table change/id changes', e);
+      }
     } else {
       // All items viewed, don't return nothing.
+      console.log('all items viewed');
       foodItem = await prisma.foodItem.findFirst({
         ...foodItemQuery,
       });

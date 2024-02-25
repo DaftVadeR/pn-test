@@ -1,4 +1,4 @@
-export async function LikeIcon(){
+export function LikeIcon(){
   return (
     <svg width="32" height="31" viewBox="0 0 32 31" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect id="hover-change" width="31.283" height="30.7037" rx="8.68973" fill="black" fillOpacity="0.56"/>

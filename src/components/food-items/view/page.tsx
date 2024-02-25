@@ -4,12 +4,13 @@ import { FoodItem } from '../types';
 import Like from './like';
 import ContentStuff from './content';
 import CallToAction from './call-to-action';
+import Image from "next/image";
 
 const ViewFoodItemPage = ({ foodItem }: { foodItem: FoodItem }) => {
   return (
     <Container>
       <ImageContainer>         
-        <img src={foodItem.images[0].url} alt={foodItem.name} />
+        <Image src={foodItem.images[0].url} alt={foodItem.name} width="500" height="500" />
       </ImageContainer>
       <ContentContainer>
         <TitleBar>
@@ -17,7 +18,7 @@ const ViewFoodItemPage = ({ foodItem }: { foodItem: FoodItem }) => {
             {foodItem.name}
           </Title>
           <Icons>
-            <Like foodItemId={foodItem.id} isLiked={foodItem.likes.length > 0} />
+            <Like />
           </Icons>
         </TitleBar>
         <ContentStuff

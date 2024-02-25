@@ -62,7 +62,7 @@ model VerificationToken {
 }
 
 model ViewedFoodItem {
-  id    String  @id @default(cuid())
+  id            String    @id @default(cuid())
   userId       String
   foodItemId   String
   foodItem      FoodItem @relation(fields: [foodItemId], references: [id], onDelete: Cascade)
