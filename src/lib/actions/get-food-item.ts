@@ -1,7 +1,19 @@
 'use server';
 
 import { auth } from "@/auth";
-import { FoodItem, PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
+
+// Cant do order by rand() in Prisma without raw SQL so will always be in order of creation ID-wise
+const getRandomFoodItemRecord = async (prisma: PrismaClient, foodItemQuery: Object, viewedIds: string[]) => {
+  return await prisma.foodItem.findFirst({
+    ...foodItemQuery,
+    where: {
+      id: {
+        notIn: viewedIds
+      },
+    },
+  });
+}
 
 // Will fix types if have time.
 export default async function getRandomFoodItem (): Promise<any> {
@@ -46,17 +58,10 @@ export default async function getRandomFoodItem (): Promise<any> {
             userId: session?.user?.id,
           }
         },
-      }
+      },
     };
 
-    foodItem = await prisma.foodItem.findFirst({
-      ...foodItemQuery,
-      where: {
-        id: {
-          notIn: viewedIds
-        },
-      },
-    });
+    foodItem = await getRandomFoodItemRecord(prisma, foodItemQuery, viewedIds);
 
     // Add view
     if(foodItem && session?.user?.id && viewedIds.indexOf(foodItem.id) === -1) {
@@ -73,9 +78,16 @@ export default async function getRandomFoodItem (): Promise<any> {
     } else {
       // All items viewed, don't return nothing.
       console.log('all items viewed');
-      foodItem = await prisma.foodItem.findFirst({
-        ...foodItemQuery,
+
+      // For testing purposes - just going to clear all views so its tarts from 0 again. Prisma doesn't support ordering by rand() and
+      // I'm not putting in the time to do raw SQL and then change the data structure to adjust for it.
+      await prisma.viewedFoodItem.deleteMany({
+        where: {
+          userId: session?.user?.id,
+        }
       });
+
+      foodItem = await getRandomFoodItemRecord(prisma, foodItemQuery, viewedIds);
     }
 
     return foodItem;
