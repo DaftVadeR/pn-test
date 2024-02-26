@@ -1,17 +1,15 @@
-import { Icons, Container, TitleBar,  ContentContainer, Title, ImageContainer } from "./style";
+import { Icons, Container, TitleBar,  ContentContainer, Title } from "./style";
 
 import { FoodItem } from '../types';
 import Like from './like';
 import ContentStuff from './content';
 import CallToAction from './call-to-action';
-import Image from "next/image";
+import ImageGallery from "./image-gallery";
 
 const ViewFoodItemPage = ({ foodItem }: { foodItem: FoodItem }) => {
   return (
     <Container>
-      <ImageContainer>         
-        <Image src={foodItem.images[0].url} alt={foodItem.name} width="500" height="500" />
-      </ImageContainer>
+      <ImageGallery foodItem={foodItem} />
       <ContentContainer>
         <TitleBar>
           <Title>

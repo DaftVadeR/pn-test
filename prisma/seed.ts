@@ -27,30 +27,14 @@ const toUppercase = (paragraph: string) => {
 }
 
 for (let i = 0; i < 20; i++) {
-  // let numWords = Math.floor(Math.random() * 2) + 1;
   let numWords = 2;
 
   let name: string = fastLoremIpsum(`${numWords}w`);
   let descriptionUppercase: string = toUppercase(fastLoremIpsum(`75w`))+"\n\n\n\n"+toUppercase(fastLoremIpsum(`75w`));
   let nutritional_facts: string = fastLoremIpsum(`105w`);
 
-  // console.log('name', name);
-  // console.log('description', description);
-  // console.log('nutritional_facts', nutritional_facts);
-
-  // Capitalize first letter
-  // let capitalized = 
-
   let nameUppercase: string = `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
-  // let descriptionUppercase: string = `${description.charAt(0).toUpperCase()}${description.slice(1)}`;
   let nfUppercase: string = `${nutritional_facts.charAt(0).toUpperCase()}${nutritional_facts.slice(1)}`;
-
-  // console.log('name', name);
-  // console.log('name uppercase', nameUppercase);
-  // console.log('description', description);
-  // console.log('description uppercase', descriptionUppercase);
-  // console.log('nutritional_facts', nutritional_facts);
-  // console.log('nutritional_facts uppercase', nfUppercase);
 
   foodItems.push({
     name: nameUppercase,
@@ -58,6 +42,12 @@ for (let i = 0; i < 20; i++) {
     nutritional_facts: nfUppercase,
     images: {
       create: [
+        {
+          url: getRandomImageUrl(),
+        },
+        {
+          url: getRandomImageUrl(),
+        },
         {
           url: getRandomImageUrl(),
         }

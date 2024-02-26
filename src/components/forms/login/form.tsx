@@ -2,6 +2,8 @@
 
 import { useFormState, useFormStatus } from 'react-dom';
 import authenticate from '@/lib/actions/authenticate';
+import { RegisterPrompt, Title, FormInner, Form, Errors, ErrorMessage } from './style';
+import Link from 'next/link';
 
 function LoginButton() {
   const { pending } = useFormStatus();
@@ -17,11 +19,17 @@ export default function LoginForm() {
   const [errorMessage, dispatch] = useFormState(authenticate, undefined);
  
   return (
-    <form action={dispatch} className="space-y-3">
-      <div className="flex-1 rounded-lg bg-gray-900 px-6 pb-4 pt-8">
-        <h1 className={`mb-3 text-2xl text-white`}>
-          Please log in to continue.
-        </h1>
+    <Form action={dispatch}>
+      <FormInner>
+        <Title>
+          Login
+        </Title> 
+        <Errors
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+        </Errors>
         <div className="w-full">
           <div>
             <label
@@ -62,15 +70,9 @@ export default function LoginForm() {
           </div>
         </div>
         <LoginButton />
-        <div
-          className="flex h-8 items-end space-x-1"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {errorMessage && <p className="text-sm text-red-500">{errorMessage}</p>}
-        </div>
-      </div>
-    </form>
+        <RegisterPrompt>Don’t have an account? <Link href={'/register'}>Register</Link></RegisterPrompt>
+      </FormInner>
+    </Form>
   );
 }
 

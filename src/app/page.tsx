@@ -1,13 +1,21 @@
 import React from "react";
 
-import MainTemplate from "../components/layout/main";
+import LoginTemplate from "../components/layout/login";
 
-import ViewFoodItemPage from '@/components/food-items/view';
+import Onboard from '@/components/pages/onboard';
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
+  const session = await auth();
+
+  if(session) {
+    return redirect('/food-items');
+  }
+
   return (
-    <MainTemplate>
-      <ViewFoodItemPage />
-    </MainTemplate>
+    <LoginTemplate bgClass={'bg-primaryGreenDark'}>
+      <Onboard />
+    </LoginTemplate>
   );
 };

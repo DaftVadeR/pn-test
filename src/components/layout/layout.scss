@@ -82,3 +82,10 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.bg-green-circle {
+  background-image: url('/green-circle.svg');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}

@@ -1,11 +1,13 @@
-export default function LoginTemplate({
+import LoginTemplate from "@/src/components/layout/login";
+
+export default function LoginPageTemplate({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <main className="flex flex-col items-center justify-center min-h-full min-w-full">
+    <LoginTemplate>
       {children}
-    </main>
+    </LoginTemplate>
   );
 }

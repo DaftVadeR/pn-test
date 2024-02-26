@@ -4,5 +4,5 @@ export const Container = classed.div("flex flex-col items-center h-full w-full")
 
 export const Content = classed.div("w-full h-full flex-1 relative");
 
-export const ContentContainer = classed.div("container max-w-md mx-auto h-full");
+export const ContentContainer = classed.div("container mx-auto h-full sm:max-w-full md:max-w-md");
 export const ContentInner = classed.div("h-full w-full flex flex-col items-center justify-center");
