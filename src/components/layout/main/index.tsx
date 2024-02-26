@@ -6,7 +6,8 @@ import { redirect } from "next/navigation";
 export default async function MainTemplate({ children }: { children: React.ReactNode }) {
   const session = await auth();
 
-  if(!session || !session.user || !session.user.email) {
+  if(!session) {
+    console.log('session', session);
     console.log('no session, redirecting', session);
     return redirect('/login');
   }

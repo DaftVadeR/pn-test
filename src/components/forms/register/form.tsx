@@ -1,34 +1,34 @@
 'use client';
 
 import { useFormState, useFormStatus } from 'react-dom';
-import authenticate from '@/lib/actions/authenticate';
-import { Header, PersonImageContainer, RegisterPrompt, Title, FormInner, ForgotPasswordPrompt, Form, Errors, ErrorMessage, Text, Label, Button } from './style';
+import register from '@/lib/actions/register';
+import { Header, PersonImageContainer, LoginPrompt, Title, FormInner, ForgotPasswordPrompt, Form, Errors, ErrorMessage, Text, Label, Button } from './style';
 import Link from 'next/link';
 import Image from 'next/image';
 import Password from './password';
 
-function LoginButton() {
+function RegisterButton() {
   const { pending } = useFormStatus();
  
   return (
     <Button type="submit" aria-disabled={pending}>
-      Log in
+      Register
     </Button>
   );
 }
 
-export default function LoginForm() {
-  const [errorMessage, dispatch] = useFormState(authenticate, undefined);
+export default function RegisterForm() {
+  const [errorMessage, dispatch] = useFormState(register, undefined);
  
   return (
     <Form action={dispatch}>
       <FormInner>
         <Header>
           <Title>
-            Login
+            Register
           </Title>
           <PersonImageContainer>
-            <Image src={'/dude-login.svg'} alt='Dude' width={159} height={318} />
+            <Image src={'/girl-register.svg'} alt='Girl' width={129} height={317} />
           </PersonImageContainer>
         </Header> 
         <Errors
@@ -40,6 +40,22 @@ export default function LoginForm() {
         <div className="w-full">
           <div>
             <Label
+              htmlFor="username"
+            >
+              username
+            </Label>
+            <div className="relative">
+              <Text
+                id="username"
+                type="username"
+                name="username"
+                placeholder="superkiller99"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <Label
               htmlFor="email"
             >
               email
@@ -49,7 +65,7 @@ export default function LoginForm() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="Enter your email address"
+                placeholder="yourmail@mail.com"
                 required
               />
             </div>
@@ -61,11 +77,10 @@ export default function LoginForm() {
               password
             </Label>
             <Password />
-            <ForgotPasswordPrompt href="/forgot-password">Forgot password?</ForgotPasswordPrompt>
           </div>
         </div>
-        <LoginButton />
-        <RegisterPrompt>Don’t have an account? <Link className='font-bold hover:underline' href={'/register'}>Register</Link></RegisterPrompt>
+        <RegisterButton />
+        <LoginPrompt>Have an account? <Link className='font-bold hover:underline' href={'/login'}>Login</Link></LoginPrompt>
       </FormInner>
     </Form>
   );
