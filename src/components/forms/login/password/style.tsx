@@ -1,7 +1,7 @@
 import { classed } from '@tw-classed/react';
 
 export const Container = classed.div('mb-12 min-h-full w-full flex flex-col items-center justify-center');
-export const RegisterPrompt = classed.div('mt-8 text-center text-sm text-primaryGreen');
+export const RegisterPrompt = classed.div('');
 export const PersonImageContainer = classed.div('pr-4');
 export const Header = classed.div('flex items-center justify-center');
 export const Title = classed.div('mb-3 text-4xl font-bold text-white flex-1');
@@ -15,5 +15,5 @@ export const ForgotPasswordPrompt = classed.a('float-right text-xs text-primaryG
 export const Text = classed.input('peer block w-full rounded-md bg-altGray px-2 py-3 text-sm outline-2 placeholder:text-gray-500 focus:outline-primaryGreen border-none');
 export const Label = classed.label('mb-1 mt-5 block text-md font-medium text-primary-content');
 
-export const Button = classed.button("mt-8 btn btn-lg border-none btn-block bg-primaryGreen text-white active:bg-primaryGreen");
+export const Button = classed.button("cursor-pointer h-full px-4 hover:bg-base-200 rounded-lg absolute right-0 bottom-0 top-0 inline-flex justify-center items-center");
 export const Cta = classed.div("flex-0 px-4 pb-16");

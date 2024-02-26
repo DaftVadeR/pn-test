@@ -6,7 +6,7 @@ export default function LoginPageTemplate({
   children: React.ReactNode;
 }) {
   return (
-    <LoginTemplate>
+    <LoginTemplate backUrl="/">
       {children}
     </LoginTemplate>
   );
