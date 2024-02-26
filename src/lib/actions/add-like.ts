@@ -21,8 +21,6 @@ export default async function addLike (foodItemId: string): Promise<null | boole
       }
     });
 
-    console.log('like added');
-
     return !!foodItemId;
   } catch (e) {
     console.error(e);
