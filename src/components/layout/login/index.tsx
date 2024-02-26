@@ -13,7 +13,7 @@ export type LoginTemplateProps = {
 export default async function LoginTemplate({ bgClass = '', children, backUrl = '' }: LoginTemplateProps) {
   const session = await auth();
 
-  if(session) {
+  if(session && session.user?.email) {
     console.log('has session, redirecting', session);
     return redirect('/food-items');
   }

@@ -93,4 +93,5 @@ const doSeed = async () => {
   }
 };
 
-doSeed();
+// Had food items working locally. Changed to remote API.
+// doSeed();

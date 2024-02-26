@@ -1,23 +1,36 @@
 'use server';
 
 import { auth } from "@/auth";
-import { PrismaClient } from "@prisma/client";
+import getFoodItemIds from "./get-food-item-ids";
+import { FoodItem } from "@/src/components/food-items/types";
 
-// Cant do order by rand() in Prisma without raw SQL so will always be in order of creation ID-wise
-const getRandomFoodItemRecord = async (prisma: PrismaClient, foodItemQuery: Object, viewedIds: string[]) => {
-  return await prisma.foodItem.findFirst({
-    ...foodItemQuery,
-    where: {
-      id: {
-        notIn: viewedIds
-      },
+
+const getFoodItemResponse = async (id: number, token: string): Promise<FoodItem | null> => {
+  let response = await fetch(`https://ciaochow.plusnarrative.biz/api/chows/${id}`, {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+      "Authorization": `Bearer ${token}`,
     },
   });
+
+  console.log('response', await response.json());
+
+  if(!response.ok) {
+    return null;
+  }
+
+  let json = await response.json();
+
+  return json;
 }
 
 // Will fix types if have time.
 export default async function getRandomFoodItem (): Promise<any> {
   let session = await auth();
+
+  console.log('getting here', session);
 
   if(!session?.user?.id) {
     console.log('error - user empty for some reason');
@@ -27,68 +40,15 @@ export default async function getRandomFoodItem (): Promise<any> {
   let foodItem = null;
 
   try {
-    const prisma = new PrismaClient();
+    let allIds = await getFoodItemIds();
+    console.log('all ids', allIds);
+    let randomId = allIds[Math.floor(Math.random() * allIds.length)];
+    console.log('get item', randomId);
+    console.log('session', session);
 
-    // Hacky, and would be better to do it in queries only, but I'm new to Prisma and it feels like it gets in the way of doing stuff like this.
-    // As such, get viewed items, create ID list, then do a query elimintating all items that have IDs in that list.
-    const viewedItems = await prisma.viewedFoodItem.findMany({
-      select: {
-        foodItemId: true,
-      },
-      where: {
-        userId: session?.user?.id,
-      },
-    });
+    foodItem = await getFoodItemResponse(randomId, session.jwt);
 
-    let viewedIds: string[] = [];
-
-    viewedItems.map((viewedFoodItem) => {
-      viewedIds.push(viewedFoodItem.foodItemId);
-    });
-
-    let foodItemQuery = {
-      select: {
-        id: true,
-        nutritional_facts: true,
-        description: true,
-        name: true,
-        images: true,
-        likes: {
-          where: {
-            userId: session?.user?.id,
-          }
-        },
-      },
-    };
-
-    foodItem = await getRandomFoodItemRecord(prisma, foodItemQuery, viewedIds);
-
-    // Add view
-    if(foodItem && session?.user?.id && viewedIds.indexOf(foodItem.id) === -1) {
-      try{ 
-        await prisma.viewedFoodItem.create({
-          data: {          
-            userId: session.user.id,
-            foodItemId: foodItem.id,
-          }
-        });
-      } catch(e) {
-        console.error('session user ID probably out of sync due to user table change/id changes', e);
-      }
-    } else {
-      // All items viewed, don't return nothing.
-      console.log('all items viewed');
-
-      // For testing purposes - just going to clear all views so its tarts from 0 again. Prisma doesn't support ordering by rand() and
-      // I'm not putting in the time to do raw SQL and then change the data structure to adjust for it.
-      await prisma.viewedFoodItem.deleteMany({
-        where: {
-          userId: session?.user?.id,
-        }
-      });
-
-      foodItem = await getRandomFoodItemRecord(prisma, foodItemQuery, viewedIds);
-    }
+    console.log('got food item', foodItem);
 
     return foodItem;
   } catch (e) {

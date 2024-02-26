@@ -3,26 +3,6 @@ import { authConfig } from './auth.config';
 import Credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
 
-import bcrypt from 'bcrypt';
-import prisma from '@/lib/prisma';
-import { User } from '@prisma/client';
- 
-async function getUser(email: string): Promise<User | null> {
-  try {
-    let user = await prisma.user.findUnique({
-      where: {
-        email: email
-      }
-    });
-
-    return user;
-  } catch (error) {
-    console.error('Failed to fetch user:', error);
-  }
-
-  return null;
-} 
-
 type LoginProps = {
   email: string;
   password: string;
@@ -54,10 +34,10 @@ async function loginUser({ email, password } : LoginProps): Promise<User | null>
 
 export const { auth, signIn, signOut } = NextAuth({
   ...authConfig,
+  
   providers: [
     Credentials({
-      name: "CiaoChow Log in", // Form title
-
+      name: "CiaoChow Log in", // Form title      
       credentials: {
         username: { label: "Email", type: "text", placeholder: "test@test.com" },
         password: { label: "Password", type: "password" }
@@ -71,12 +51,15 @@ export const { auth, signIn, signOut } = NextAuth({
         if (parsedCredentials.success) {
           const { email, password } = parsedCredentials.data;
 
-          let user = await loginUser({ email, password });
+          let response = await loginUser({ email, password });
+          
+          console.log('LOG IN USER RECORD', response);
 
-          console.log('loginuser', user);
+          const user = { ...response.user, jwt: response.jwt };
 
           return user as any;
-          
+
+          // Had login working via Prisma. Changed to API above.
 
           // const user = await getUser(email);
 
