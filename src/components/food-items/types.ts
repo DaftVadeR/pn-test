@@ -11,10 +11,8 @@ export type Image = {
 
 export type FoodItem = {
   id: string;
-  name: string;
-  nutritional_facts: string;
-  images: Image[];
-  description: string;
-  likes: Likes[];
+  attributes: {
+    Title: string;
+    Description: string;
+  }
 };
-

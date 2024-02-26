@@ -14,8 +14,6 @@ const getIdsResponse = async (start: number = 0, token: string) => {
     },
   });
 
-  console.log('json', response.ok, start);
-
   if(!response.ok) {
     return {
       start,
@@ -25,8 +23,6 @@ const getIdsResponse = async (start: number = 0, token: string) => {
   }
 
   let json = await response.json();
-
-  console.log('response', json);
 
   ids = json.data.map(({ id }: { id: number }) => {
     return id;

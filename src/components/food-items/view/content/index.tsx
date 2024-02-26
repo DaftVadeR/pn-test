@@ -23,11 +23,11 @@ const ContentStuff = ({ foodItem }: { foodItem: FoodItem }) => {
       />
       {currentTab === DESCRIPTION &&
         <TabContainer>
-          <Content dangerouslySetInnerHTML={{__html: foodItem.description.replace("\n", "<br/><br/>")}} />    
+          <Content dangerouslySetInnerHTML={{__html: foodItem.attributes.Description.replace("\n", "<br/><br/>")}} />    
         </TabContainer>}
       {currentTab === NUTRITION &&
         <TabContainer>
-          <Content dangerouslySetInnerHTML={{__html: foodItem.nutritional_facts}} />
+          <Content dangerouslySetInnerHTML={{__html: foodItem.attributes.Description}} />
         </TabContainer>}
     </>
   );

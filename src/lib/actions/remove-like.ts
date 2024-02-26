@@ -18,10 +18,10 @@ export default async function removeLike (foodItemId: string): Promise<null | bo
     await prisma.likedFoodItem.deleteMany({
       where: {
         userId: session?.user?.id!,
-        foodItemId: foodItemId,
+        foodItemId: `${foodItemId}`,
       }
     });
-    console.log('liked removed');
+    
     return true;
   } catch (e) {
     console.error(e);

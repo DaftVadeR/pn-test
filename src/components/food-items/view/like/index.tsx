@@ -10,7 +10,6 @@ export default function Like() {
   const {isLiked, toggleLike, foodItem } = useContext(FoodItemContext);
 
   const onClick = useCallback(() => {
-      console.log('clicked');
       toggleLike(!isLiked);
   }, [toggleLike, isLiked]);
 

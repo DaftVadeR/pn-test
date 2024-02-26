@@ -17,7 +17,7 @@ export default async function addLike (foodItemId: string): Promise<null | boole
     await prisma.likedFoodItem.create({
       data: {
         userId: session?.user?.id,
-        foodItemId,
+        foodItemId: `${foodItemId}`,
       }
     });
 

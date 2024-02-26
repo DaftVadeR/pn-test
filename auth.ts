@@ -52,8 +52,6 @@ export const { auth, signIn, signOut } = NextAuth({
           const { email, password } = parsedCredentials.data;
 
           let response = await loginUser({ email, password });
-          
-          console.log('LOG IN USER RECORD', response);
 
           const user = { ...response.user, jwt: response.jwt };
 

@@ -10,9 +10,7 @@ const CallToAction = () => {
 
   return (
     <>
-      <NextButton onClick={() => {
-        refetch();
-      }}>
+      <NextButton onClick={refetch}>
         Nah! Find something else.
       </NextButton>
     </>

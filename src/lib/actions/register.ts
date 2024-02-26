@@ -25,8 +25,6 @@ export default async function register(
     if (parsedCredentials.success) {
       const { email, password, username } = parsedCredentials.data;
 
-      console.log('credentials', { email, password, username });
-
       let response = await fetch('https://ciaochow.plusnarrative.biz/api/auth/local/register', {
         method: 'POST',
         headers: {
@@ -52,7 +50,6 @@ export default async function register(
         redirect('/food-items');
       } else {
         let result = await response.json();
-        console.log(result);
 
         if(result?.error?.message) {
           return result.error.message;

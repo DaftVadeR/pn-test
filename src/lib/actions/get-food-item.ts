@@ -5,7 +5,7 @@ import getFoodItemIds from "./get-food-item-ids";
 import { FoodItem } from "@/src/components/food-items/types";
 
 
-const getFoodItemResponse = async (id: number, token: string): Promise<FoodItem | null> => {
+const getFoodItemResponse = async (id: number, token: string): Promise<any> => {
   let response = await fetch(`https://ciaochow.plusnarrative.biz/api/chows/${id}`, {
     method: 'GET',
     headers: {
@@ -14,8 +14,6 @@ const getFoodItemResponse = async (id: number, token: string): Promise<FoodItem 
       "Authorization": `Bearer ${token}`,
     },
   });
-
-  console.log('response', await response.json());
 
   if(!response.ok) {
     return null;
@@ -30,10 +28,7 @@ const getFoodItemResponse = async (id: number, token: string): Promise<FoodItem 
 export default async function getRandomFoodItem (): Promise<any> {
   let session = await auth();
 
-  console.log('getting here', session);
-
   if(!session?.user?.id) {
-    console.log('error - user empty for some reason');
     return null;
   }
 
@@ -41,16 +36,11 @@ export default async function getRandomFoodItem (): Promise<any> {
 
   try {
     let allIds = await getFoodItemIds();
-    console.log('all ids', allIds);
     let randomId = allIds[Math.floor(Math.random() * allIds.length)];
-    console.log('get item', randomId);
-    console.log('session', session);
 
     foodItem = await getFoodItemResponse(randomId, session.jwt);
 
-    console.log('got food item', foodItem);
-
-    return foodItem;
+    return foodItem.data as FoodItem;
   } catch (e) {
     console.error(e);
   }
